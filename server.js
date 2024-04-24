@@ -1,32 +1,34 @@
-const express = require('express');
-const app = express();
+const express = require("express");
+const cors = require("cors");
 const dotenv = require('dotenv');
-const cors = require('cors');
-const {Users} = require('./models/usersModel');
-const sequelize = require('./db')
+
+const app = express();
 
 dotenv.config();
+const db = require("./app/models");
+db.sequelize.sync().then(() => {
+  console.log("Database syncronised...");
+})
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
-app.use(express.json());
 app.use(cors());
 
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-sequelize.authenticate().then(() => {
-    console.log('Connected');
-})
-.catch((error) => {
-    console.log(error)
-})
-
-
-app.get('/', async(req, res) => {
-//   res.send('Server is running')
-  const users = await Users.findAll();
-console.log(users.every(user => user instanceof Users)); // true
-console.log('All users:', JSON.stringify(users, null, 2));
-
-res.send(JSON.stringify(users, null, 2))
+// simple route
+app.get("/", (req, res) => {
+  res.send('HALOOOOO');
 });
 
-app.listen(process.env.PORT, () =>  console.log('Server is running'));
+require("./app/routes/users.routes")(app);
+
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});

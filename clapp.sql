@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
@@ -6,6 +6,8 @@
 -- Létrehozás ideje: 2024. Ápr 18. 09:44
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
+
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -19,7 +21,8 @@ SET time_zone = "+00:00";
 
 --
 -- Adatbázis: `clapp`
---
+CREATE DATABASE IF NOT EXISTS `clapp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_hungarian_ci;
+USE `clapp`;
 
 -- --------------------------------------------------------
 
